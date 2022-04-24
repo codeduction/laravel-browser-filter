@@ -1,5 +1,5 @@
 {
-    "name": "spinen/laravel-browser-filter",
+    "name": "codeduction/laravel-browser-filter",
     "description": "Filters http requests based on browser type.",
     "keywords": [
         "browser hawk",
