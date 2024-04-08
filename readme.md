@@ -46,6 +46,37 @@ The package uses the [auto registration feature](https://laravel.com/docs/5.8/pa
 
 The middleware needs to be registered with the Kernel to allow it to parse the request.
 
+### Laravel 11 & newer
+
+Register the HTTP Stack Middleware for the web group in `bootstrap/app.php`:
+
+```php
+    ->withMiddleware(function (Middleware $middleware) {
+        // ...
+        $middleware->web(append: [
+            // ...
+            \Spinen\BrowserFilter\Stack\Filter::class,
+        ]);
+        // ...
+    })
+```
+
+Register the Route Middlewares in `bootstrap/app.php`:
+
+```php
+    ->withMiddleware(function (Middleware $middleware) {
+        // ...
+        $middleware->alias([
+            // ...
+            'browser.allow' => \Spinen\BrowserFilter\Route\AllowFilter::class,
+            'browser.block' => \Spinen\BrowserFilter\Route\BlockFilter::class,
+        ]);
+        // ...
+    })
+```
+
+### Before Laravel 11
+
 Register the HTTP Stack Middleware for the web group in `app/Http/Kernel.php`:
 
 ```php
@@ -65,6 +96,8 @@ Register the Route Middlewares in `app/Http/Kernel.php`:
         'browser.allow' => \Spinen\BrowserFilter\Route\AllowFilter::class,
         'browser.block' => \Spinen\BrowserFilter\Route\BlockFilter::class,
 ```
+
+### Page to show if blocked
 
 Build a page with a named route to redirect blocked browsers to:
 
