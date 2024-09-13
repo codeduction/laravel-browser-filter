@@ -98,11 +98,10 @@ abstract class Filter
         ParserCreator $parser,
         Redirector $redirector
     ) {
-        $this->cache = $cache;
-        $this->config = $config;
-        $this->detector = $detector;
-        $this->client = $parser->parseAgent($this->detector->getUserAgent());
-        $this->redirector = $redirector;
+        $userAgent = $detector->getUserAgent();
+        $this->client = !is_null($userAgent)
+            ? $parser->parseAgent($userAgent)
+            : null;
     }
 
     /**
@@ -484,9 +483,10 @@ abstract class Filter
      *
      * @throws InvalidRuleDefinitionsException
      */
-    public function validateRules()
+
+    public function validateRules(): void
     {
-        if (empty($this->getRules())) {
+        if (is_null($this->client) || empty($this->getRules())) {
             return;
         }
 
