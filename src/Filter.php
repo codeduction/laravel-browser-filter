@@ -26,7 +26,7 @@ abstract class Filter
     /**
      * The client instance.
      */
-    protected Client $client;
+    protected ?Client $client;
 
     /**
      * Location of the config file.
