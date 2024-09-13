@@ -137,7 +137,7 @@ abstract class Filter
     {
         $this->redirect_route = $redirect_route;
 
-        if ($this->onRedirectPath($request)) {
+        if ($this->onRedirectPath($request) || is_null($this->client)) {
             return $next($request);
         }
 
