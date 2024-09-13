@@ -53,7 +53,10 @@ abstract class Filter
         protected ParserCreator $parser,
         protected Redirector $redirector
     ) {
-        $this->client = $parser->parseAgent($detector->getUserAgent());
+        $userAgent = $detector->getUserAgent();
+        $this->client = !is_null($userAgent)
+            ? $parser->parseAgent($userAgent)
+            : null;
     }
 
     /**
@@ -338,7 +341,7 @@ abstract class Filter
      */
     public function validateRules(): void
     {
-        if (empty($this->getRules())) {
+        if (is_null($this->client) || empty($this->getRules())) {
             return;
         }
 
