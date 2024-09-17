@@ -3,11 +3,11 @@
 namespace Spinen\BrowserFilter;
 
 use Closure;
+use Detection\MobileDetect;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Mobile_Detect;
 use Spinen\BrowserFilter\Exceptions\FilterTypeNotSetException;
 use Spinen\BrowserFilter\Exceptions\InvalidRuleDefinitionsException;
 use Spinen\BrowserFilter\Support\ParserCreator;
@@ -49,7 +49,7 @@ abstract class Filter
     public function __construct(
         protected Cache $cache,
         protected Config $config,
-        protected Mobile_Detect $detector,
+        protected MobileDetect $detector,
         protected ParserCreator $parser,
         protected Redirector $redirector
     ) {
