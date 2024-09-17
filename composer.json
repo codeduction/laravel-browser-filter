@@ -16,6 +16,10 @@
         {
             "name": "Stephen Finney",
             "email": "stephen.finney@spinen.com"
+        },
+        {
+            "name": "Jason Mountcastle",
+            "email": "jason@mountcastle.dev"
         }
     ],
     "require": {
@@ -24,7 +28,7 @@
         "illuminate/cache": "^9.19|^10|^11.0",
         "illuminate/routing": "^9.19|^10|^11.0",
         "illuminate/support": "^9.42|^10|^11.0",
-        "mobiledetect/mobiledetectlib": "~2.8|^4.8",
+        "mobiledetect/mobiledetectlib": "^4.8",
         "ua-parser/uap-php": "~3.9"
     },
     "require-dev": {
