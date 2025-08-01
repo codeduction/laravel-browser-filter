@@ -3,11 +3,11 @@
 namespace Spinen\BrowserFilter;
 
 use Closure;
+use Detection\MobileDetect;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Mobile_Detect;
 use Spinen\BrowserFilter\Exceptions\FilterTypeNotSetException;
 use Spinen\BrowserFilter\Exceptions\InvalidRuleDefinitionsException;
 use Spinen\BrowserFilter\Support\ParserCreator;
@@ -26,7 +26,7 @@ abstract class Filter
     /**
      * The client instance.
      */
-    protected Client $client;
+    protected ?Client $client;
 
     /**
      * Location of the config file.
@@ -49,11 +49,14 @@ abstract class Filter
     public function __construct(
         protected Cache $cache,
         protected Config $config,
-        protected Mobile_Detect $detector,
+        protected MobileDetect $detector,
         protected ParserCreator $parser,
         protected Redirector $redirector
     ) {
-        $this->client = $parser->parseAgent($detector->getUserAgent());
+        $userAgent = $detector->getUserAgent();
+        $this->client = !is_null($userAgent)
+            ? $parser->parseAgent($userAgent)
+            : null;
     }
 
     /**
@@ -134,7 +137,7 @@ abstract class Filter
     {
         $this->redirect_route = $redirect_route;
 
-        if ($this->onRedirectPath($request)) {
+        if ($this->onRedirectPath($request) || is_null($this->client)) {
             return $next($request);
         }
 
@@ -338,7 +341,7 @@ abstract class Filter
      */
     public function validateRules(): void
     {
-        if (empty($this->getRules())) {
+        if (is_null($this->client) || empty($this->getRules())) {
             return;
         }
 
