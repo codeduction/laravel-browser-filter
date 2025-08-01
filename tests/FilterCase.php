@@ -2,13 +2,13 @@
 
 namespace Spinen\BrowserFilter;
 
+use Detection\MobileDetect;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Session\Store as Session;
-use Mobile_Detect;
 use Mockery;
 use Spinen\BrowserFilter\Support\ParserCreator;
 use UAParser\Result\Client;
@@ -131,7 +131,7 @@ abstract class FilterCase extends TestCase
 
         $agent = 'FakeBrowser/x.y (Spinen; S; PPC Mac OS X Mach-O; en; rv:a.b.c.d) Engine/YYYYMMDD Whatever/a.b.c';
 
-        $this->detector_mock = Mockery::mock(Mobile_Detect::class);
+        $this->detector_mock = Mockery::mock(MobileDetect::class);
 
         $this->detector_mock->shouldReceive('getUserAgent')
                             ->once()
