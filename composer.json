@@ -25,9 +25,9 @@
     "require": {
         "php": ">=8.1",
         "ext-json": "*",
-        "illuminate/cache": "^9.19|^10|^11.0",
-        "illuminate/routing": "^9.19|^10|^11.0",
-        "illuminate/support": "^9.42|^10|^11.0",
+        "illuminate/cache": "^9.19|^10|^11.0|^12.0",
+        "illuminate/routing": "^9.19|^10|^11.0|^12.0",
+        "illuminate/support": "^9.42|^10|^11.0|^12.0",
         "mobiledetect/mobiledetectlib": "^4.8",
         "ua-parser/uap-php": "~3.9"
     },
